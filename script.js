@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Typing effect for hero section
     const typedTextSpan = document.querySelector('.typed-text');
-    const textArray = ['Designer', 'Designer', 'Problem Solver'];
-    const typingDelay = 200;
-    const erasingDelay = 100;
-    const newTextDelay = 2000;
+    const textArray = ['Creative Designer', 'Video Editor', 'Content Creator'];
+    const typingDelay = 100;
+    const erasingDelay = 50;
+    const newTextDelay = 500;
     let textArrayIndex = 0;
     let charIndex = 0;
     
@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             textArrayIndex++;
             if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-            setTimeout(type, typingDelay + 1100);
+            setTimeout(type, typingDelay);
         }
     }
     
     // Start typing effect on page load
-    if (textArray.length) setTimeout(type, newTextDelay + 250);
+    if (textArray.length) setTimeout(type, newTextDelay + 50);
     
     // Animate skill bars when they come into view
     const skillSection = document.querySelector('.skills');

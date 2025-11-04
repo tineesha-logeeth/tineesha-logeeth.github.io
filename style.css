@@ -6,17 +6,30 @@
 }
 
 :root {
-    --dark-bg: #0a192f;
-    --dark-blue: #112240;
-    --light-blue: #233554;
-    --accent-blue: #64ffda;
-    --text-primary: #ccd6f6;
-    --text-secondary: #8892b0;
-    --text-tertiary: #a8b2d1;
+    /* Base Palette */
+    --Color1: #00070B;  /* Deep Navy Black */
+    --Color2: #013440;  /* Dark Teal */
+    --Color3: #095E71;  /* Ocean Blue */
+    --Color4: #198AA4;  /* Aqua Blue */
+    --Color5: #35B7D8;  /* Bright Cyan */
+
+    /* Themed Structure */
+    --dark-bg: var(--Color1);
+    --dark-blue: var(--Color2);
+    --light-blue: var(--Color3);
+    --accent-blue: var(--Color5);
+    --text-primary: #e4f6fa;   /* soft light cyan for readability */
+    --text-secondary: #9ecfdc; /* muted blue-gray for subtle text */
+    --text-tertiary: #77b3c2;  /* lighter blue accent */
     --transition: all 0.3s ease;
     --border-radius: 4px;
-    --box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    --box-shadow: 0 10px 30px -15px rgba(0, 52, 64, 0.7);
 }
+
+
+
+
+
 
 body {
     font-family: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', sans-serif;
