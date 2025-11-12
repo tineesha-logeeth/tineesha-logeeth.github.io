@@ -23,7 +23,7 @@
     --text-tertiary: #77b3c2;  /* lighter blue accent */
     --transition: all 0.3s ease;
     --border-radius: 4px;
-    --box-shadow: 0 10px 30px -15px rgba(0, 52, 64, 0.7);
+    --box-shadow: 0 10px 30px -15px #003440b3;
 }
 
 
@@ -51,7 +51,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(10, 25, 47, 0.9);
+    background-color: hsla(202, 95%, 8%, 0.235);
     backdrop-filter: blur(10px);
     z-index: 1000;
     transition: var(--transition);

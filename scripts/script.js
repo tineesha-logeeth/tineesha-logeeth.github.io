@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         const navbar = document.getElementById('navbar');
         if (window.scrollY > 50) {
-            navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
+            navbar.style.backgroundColor = 'hsla(202, 94%, 7%, 0.41)3c';
             navbar.style.padding = '0.8rem 0';
         } else {
-            navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.9)';
+            navbar.style.backgroundColor = 'hsla(202, 94%, 7%, 0.41)3c';
             navbar.style.padding = '1.2rem 0';
         }
     });
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Animate statistics counter
     const statItems = document.querySelectorAll('.stat-number');
     
-    function animateCounter(element, target) {
+    function animateCounter(element, target, prefix) {
         let count = 0;
         const duration = 2000; // Duration in milliseconds
         const increment = target / (duration / 16); // 16ms per frame for 60fps
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 element.textContent = Math.floor(count);
                 requestAnimationFrame(updateCount);
             } else {
-                element.textContent = target;
+                element.textContent = `${target}${prefix}`;
             }
         };
         
@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (entry.isIntersecting) {
                 statItems.forEach(stat => {
                     const target = parseInt(stat.getAttribute('data-count'));
-                    animateCounter(stat, target);
+                    const prefix = stat.getAttribute('finish-prefix') || "";
+                    animateCounter(stat, target, prefix);
                 });
                 statsObserver.disconnect(); // Stop observing after animation
             }
