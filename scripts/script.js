@@ -8,6 +8,39 @@ document.addEventListener('DOMContentLoaded', function () {
         mirror: false
     });
 
+    // Christmas Music Toggle
+    const musicToggle = document.getElementById('music-toggle');
+    const christmasMusic = document.getElementById('christmas-music');
+    
+    if (musicToggle && christmasMusic) {
+        // Check if music was previously muted (stored in localStorage)
+        const wasMuted = localStorage.getItem('musicMuted') === 'true';
+        
+        if (wasMuted) {
+            christmasMusic.muted = true;
+            musicToggle.classList.add('muted');
+            musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+            christmasMusic.muted = false;
+            musicToggle.classList.remove('muted');
+            musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+        
+        // Toggle music on button click
+        musicToggle.addEventListener('click', function () {
+            if (christmasMusic.muted) {
+                christmasMusic.muted = false;
+                musicToggle.classList.remove('muted');
+                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                localStorage.setItem('musicMuted', 'false');
+            } else {
+                christmasMusic.muted = true;
+                musicToggle.classList.add('muted');
+                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                localStorage.setItem('musicMuted', 'true');
+            }
+        });
+    }
     // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -168,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
         statsObserver.observe(aboutSection);
     }
 
-    // Form submission handling
+    // Form submission handling - Send to WhatsApp
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
@@ -211,17 +244,37 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (isValid) {
-                // In a real application, you would send the form data to a server here
+                // Format message for WhatsApp
+                const name = nameInput.value;
+                const email = emailInput.value;
+                const subject = subjectInput.value;
+                const message = messageInput.value;
+
+                // Create formatted WhatsApp message
+                const whatsappMessage = `*New Message from Contact Form*\n\n*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n\n*Message:*\n${message}`;
+                
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                // Your WhatsApp number (formatted without spaces or +)
+                const whatsappNumber = '94781674288';
+                
+                // Create WhatsApp URL
+                const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Show feedback
                 const submitBtn = this.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening WhatsApp...';
                 submitBtn.disabled = true;
 
-                // Simulate form submission
+                // Open WhatsApp in new tab
                 setTimeout(() => {
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                    submitBtn.style.backgroundColor = '#28a745';
+                    window.open(whatsappURL, '_blank');
+                    
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Ready!';
+                    submitBtn.style.backgroundColor = '#25d366';
 
                     setTimeout(() => {
                         submitBtn.innerHTML = originalText;
@@ -229,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         submitBtn.style.backgroundColor = '';
                         this.reset();
                     }, 2000);
-                }, 1500);
+                }, 500);
             }
         });
     }
@@ -268,6 +321,21 @@ document.addEventListener('DOMContentLoaded', function () {
         input.style.borderColor = '';
     }
 
+    // Project card click functionality - make entire card clickable
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+            // Find the link within the card
+            const link = this.querySelector('.project-links a');
+            if (link && !e.target.closest('a')) {
+                // Only open if we didn't click on an interactive element
+                link.click();
+            }
+        });
+    });
+
     // Floating elements animation
     const floatingElements = document.querySelectorAll('.floating-element');
 
@@ -298,6 +366,8 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', checkScroll);
 });
 
+const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
+
 if (new Date().toLocaleString('en-US', { month: 'short' }) === 'Dec') {
-particlesJS("particles-js", {"particles":{"number":{"value":70,"density":{"enable":true,"value_area":789.1476416322727}},"color":{"value":"#fff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":true,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":10,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":false,"distance":500,"color":"#ffffff","opacity":0.4,"width":2},"move":{"enable":true,"speed":3,"direction":"bottom","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"repulse"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":0.5}},"bubble":{"distance":400,"size":4,"duration":0.3,"opacity":1,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
+particlesJS("particles-js", {"particles":{"number":{"value":70,"density":{"enable":true,"value_area":789.1476416322727}},"color":{"value":"#fff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#ffffffff"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":true,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":10,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":false,"distance":500,"color":"#ffffff","opacity":0.4,"width":2},"move":{"enable":true,"speed":3,"direction":"bottom","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"window","events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"repulse"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":0.5}},"bubble":{"distance":400,"size":4,"duration":0.3,"opacity":1,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
 }

@@ -9,6 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Christmas Background Music -->
+    <audio id="christmas-music" autoplay loop volume="0.3">
+        <source src="https://assets.mixkit.co/active_storage/musics/2704-60bbc8f7-5a24-4a1f-9b2f-4255c0c1e6a3.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="music-toggle" class="music-toggle" title="Mute/Unmute Music">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- particles.js container -->
+    <div id="particles-js"></div> <!-- stats - count particles -->
+
+    <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
+    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">

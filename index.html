@@ -11,12 +11,22 @@
 </head>
 
 <body>
+    <!-- Christmas Background Music -->
+    <audio id="christmas-music" autoplay loop volume="0.5">
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="music-toggle" class="music-toggle" title="Mute/Unmute Music">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
     <!-- particles.js container -->
     <div id="particles-js"></div> <!-- stats - count particles -->
 
     <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
-    <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
+    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
