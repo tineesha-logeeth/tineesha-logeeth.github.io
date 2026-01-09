@@ -826,6 +826,139 @@ section {
     }
 }
 
+/* Floating Software Logos Background */
+.floating-logos-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Floating Logos for Each Section */
+.floating-logos-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-logo {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    opacity: 0.08;
+    color: var(--accent-blue);
+    animation: float-logo 8s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(53, 183, 216, 0.3);
+}
+
+.floating-logo i {
+    transition: all 0.3s ease;
+}
+
+/* About Section - darker blue background, use brighter cyan */
+.floating-logos-about .floating-logo {
+    color: #35B7D8;
+    opacity: 0.12;
+}
+
+/* Projects Section - dark bg, use bright cyan */
+.floating-logos-projects .floating-logo {
+    color: #35B7D8;
+    opacity: 0.1;
+}
+
+/* Skills Section - dark blue background, use bright accent */
+.floating-logos-skills .floating-logo {
+    color: #35B7D8;
+    opacity: 0.12;
+}
+
+/* Living Gallery Section - pure black, use very bright cyan/white */
+.floating-logos-gallery .floating-logo {
+    color: #64FFDA;
+    opacity: 0.15;
+    text-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
+}
+
+/* Contact Section - dark bg, use bright cyan */
+.floating-logos-contact .floating-logo {
+    color: #35B7D8;
+    opacity: 0.1;
+}
+
+.logo-photoshop {
+    top: 10%;
+    left: 5%;
+    animation: float-logo 10s ease-in-out infinite;
+}
+
+.logo-illustrator {
+    top: 20%;
+    right: 8%;
+    animation: float-logo 12s ease-in-out infinite 1s;
+}
+
+.logo-premiere {
+    top: 50%;
+    left: 3%;
+    animation: float-logo 11s ease-in-out infinite 2s;
+}
+
+.logo-aftereffects {
+    top: 60%;
+    right: 5%;
+    animation: float-logo 9s ease-in-out infinite 0.5s;
+}
+
+.logo-capcut {
+    bottom: 15%;
+    left: 10%;
+    animation: float-logo 13s ease-in-out infinite 1.5s;
+}
+
+.logo-canva {
+    bottom: 10%;
+    right: 10%;
+    animation: float-logo 10s ease-in-out infinite 2.5s;
+}
+
+.logo-affinity {
+    top: 35%;
+    right: 20%;
+    animation: float-logo 11s ease-in-out infinite 0.8s;
+}
+
+@keyframes float-logo {
+    0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-20px) translateX(10px) rotate(5deg);
+    }
+
+    50% {
+        transform: translateY(-40px) translateX(-10px) rotate(-5deg);
+    }
+
+    75% {
+        transform: translateY(-20px) translateX(10px) rotate(5deg);
+    }
+}
+
 @keyframes scroll-line {
     0% {
         height: 0;
@@ -980,42 +1113,6 @@ section {
     pointer-events: none;
 }
 
-/* Music Toggle Button */
-.music-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-blue), var(--light-blue));
-    border: 2px solid var(--accent-blue);
-    color: #fff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 1001;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(53, 183, 216, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.music-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(53, 183, 216, 0.6);
-}
-
-.music-toggle:active {
-    transform: scale(0.95);
-}
-
-.music-toggle.muted {
-    background: linear-gradient(135deg, #666, #444);
-    border-color: #888;
-    box-shadow: 0 4px 15px rgba(100, 100, 100, 0.3);
-}
-
 /* Christmas Snowflakes Animation */
 @keyframes snowfall {
     0% {
@@ -1097,3 +1194,94 @@ section {
 .snowflake:nth-child(18) { animation-duration: 18.5s; left: 65%; animation-delay: 0.5s; }
 .snowflake:nth-child(19) { animation-duration: 16.5s; left: 92%; animation-delay: 1.9s; }
 .snowflake:nth-child(20) { animation-duration: 19.5s; left: 25%; animation-delay: 2.2s; }
+
+/* Living Gallery: vertical continuous streams */
+.living-gallery {
+    background: #000000;
+    color: var(--dark-bg);
+}
+.living-gallery .section-title {
+    
+    color:#ffffff ;
+}
+
+.living-gallery .streams {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: stretch;
+}
+.living-gallery .stream {
+    height: 520px;
+    overflow: hidden;
+    position: relative;
+
+    
+}
+.living-gallery .stream::before,
+.living-gallery .stream::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 64px;
+    pointer-events: none;
+    z-index: 12;
+}
+.living-gallery .stream::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+.living-gallery .stream::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+.living-gallery .stream-track {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+.living-gallery .item {
+    display: block;
+    padding: 12px 10px;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    transform-origin: center;
+    user-select: none;
+}
+.living-gallery .item img,
+.living-gallery .item video {
+    width: 100%;
+    height: auto;
+
+    display: block;
+    object-fit: cover;
+}
+.living-gallery .item:hover {
+    transform: scale(1.04) translateY(-6px);
+    z-index: 5;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+.living-gallery .stream.paused .item img,
+.living-gallery .stream.paused .item video { filter: brightness(1.03); }
+
+/* subtle offsets for organic look - use classes to avoid nth-child issues when duplicating */
+.living-gallery .stream-track .item.offset-a { margin-left: 6%; }
+.living-gallery .stream-track .item.offset-b { margin-left: -6%; }
+.living-gallery .stream-track .item.offset-c { margin-left: 3%; }
+
+@media (max-width: 992px) {
+    .living-gallery .streams { grid-template-columns: repeat(2, 1fr); }
+    .living-gallery .stream { height: 420px; }
+}
+
+@media (max-width: 576px) {
+    .living-gallery .streams { grid-template-columns: 1fr; }
+    .living-gallery .stream { height: 360px; }
+    .living-gallery .stream::before,
+    .living-gallery .stream::after { height: 40px; }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .living-gallery .stream-track { transition: none !important; }
+}

@@ -1,5 +1,58 @@
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // Generate floating software logos for each section
+    (function initSectionFloatingLogos() {
+        // Software logos with icons
+        const logos = [
+            { name: 'Photoshop', icon: 'fa-image' },
+            { name: 'Illustrator', icon: 'fa-pen-fancy' },
+            { name: 'Premiere', icon: 'fa-film' },
+            { name: 'After Effects', icon: 'fa-sparkles' },
+            { name: 'CapCut', icon: 'fa-scissors' },
+            { name: 'Canva', icon: 'fa-palette' },
+            { name: 'Affinity', icon: 'fa-feather' },
+            { name: 'Figma', icon: 'fa-shapes' },
+            { name: 'GIMP', icon: 'fa-wand-magic-sparkles' }
+        ];
+
+        const sections = [
+            { selector: '.floating-logos-about', count: 6 },
+            { selector: '.floating-logos-projects', count: 6 },
+            { selector: '.floating-logos-skills', count: 6 },
+            { selector: '.floating-logos-gallery', count: 7 },
+            { selector: '.floating-logos-contact', count: 6 }
+        ];
+
+        const animationDurations = [8, 9, 10, 11, 12, 13, 14, 15];
+        const animationDelays = [0, 0.5, 1, 1.5, 2, 2.5, 3];
+
+        sections.forEach(section => {
+            const container = document.querySelector(section.selector);
+            if (!container) return;
+
+            for (let i = 0; i < section.count; i++) {
+                const logo = logos[i % logos.length];
+                const logoEl = document.createElement('div');
+                logoEl.className = 'floating-logo';
+                logoEl.title = logo.name;
+                logoEl.innerHTML = `<i class="fas ${logo.icon}"></i>`;
+
+                // Random positioning
+                const top = Math.random() * 100;
+                const left = Math.random() * 100;
+                logoEl.style.top = `${top}%`;
+                logoEl.style.left = `${left}%`;
+
+                // Random animation properties
+                const duration = animationDurations[Math.floor(Math.random() * animationDurations.length)];
+                const delay = animationDelays[Math.floor(Math.random() * animationDelays.length)];
+                logoEl.style.animation = `float-logo ${duration}s ease-in-out infinite ${delay}s`;
+
+                container.appendChild(logoEl);
+            }
+        });
+    })();
+
     // Initialize AOS (Animate On Scroll)
     AOS.init({
         duration: 800,
@@ -8,38 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
         mirror: false
     });
 
-    // Christmas Music Toggle
-    const musicToggle = document.getElementById('music-toggle');
     const christmasMusic = document.getElementById('christmas-music');
-    
-    if (musicToggle && christmasMusic) {
-        // Check if music was previously muted (stored in localStorage)
-        const wasMuted = localStorage.getItem('musicMuted') === 'true';
-        
-        if (wasMuted) {
-            christmasMusic.muted = true;
-            musicToggle.classList.add('muted');
-            musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-        } else {
-            christmasMusic.muted = false;
-            musicToggle.classList.remove('muted');
-            musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-        }
-        
-        // Toggle music on button click
-        musicToggle.addEventListener('click', function () {
-            if (christmasMusic.muted) {
-                christmasMusic.muted = false;
-                musicToggle.classList.remove('muted');
-                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                localStorage.setItem('musicMuted', 'false');
-            } else {
-                christmasMusic.muted = true;
-                musicToggle.classList.add('muted');
-                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                localStorage.setItem('musicMuted', 'true');
-            }
-        });
+    if (christmasMusic) {
+        // leave audio playing by default; user removed toggle button
+        christmasMusic.muted = false;
     }
     // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
@@ -364,6 +389,100 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Check on scroll
     window.addEventListener('scroll', checkScroll);
+
+    // Living Gallery: continuous vertical streams (seamless loop via JS)
+    (function initLivingGallery() {
+        const streams = document.querySelectorAll('.living-gallery .stream');
+        if (!streams.length) return;
+
+        // Dynamically generate gallery arrays from numbered images
+        const totalImages = 28; // Set this to match the number of images in images/gallery
+        const imageExtension = 'jpg';
+        const imagePath = 'images/gallery';
+        
+        // Create array of all image paths
+        const allImages = [];
+        for (let i = 1; i <= totalImages; i++) {
+            allImages.push(`${imagePath}/${i}.${imageExtension}`);
+        }
+        
+        // Divide images into 3 arrays
+        const imagesPerStream = Math.ceil(allImages.length / 3);
+        const streamsData = [
+            allImages.slice(0, imagesPerStream),
+            allImages.slice(imagesPerStream, imagesPerStream * 2),
+            allImages.slice(imagesPerStream * 2)
+        ];
+
+        streams.forEach((stream, idx) => {
+            const track = stream.querySelector('.stream-track');
+            if (!track) return;
+
+            // build items from array (fallback to existing markup if array missing)
+            const data = streamsData[idx] || [];
+            if (data.length) {
+                const offsets = ['offset-a', 'offset-b', 'offset-c', ''];
+                const nodes = data.map((path, j) => {
+                    const ext = (path.split('.').pop() || '').toLowerCase();
+                    const isVideo = ['mp4', 'webm', 'mov', 'ogg'].includes(ext);
+                    const offsetClass = offsets[j % offsets.length];
+                    if (isVideo) {
+                        const type = ext === 'mov' ? 'video/mp4' : `video/${ext}`;
+                        return `<div class="item ${offsetClass}"><video muted playsinline loop preload="metadata" poster=""><source src="${path}" type="${type}"></video></div>`;
+                    } else {
+                        return `<div class="item ${offsetClass}"><img loading="lazy" src="${path}" alt=""></div>`;
+                    }
+                }).join('');
+
+                track.innerHTML = nodes;
+            }
+
+            // duplicate content for seamless loop
+            track.innerHTML = track.innerHTML + track.innerHTML;
+
+            const videos = track.querySelectorAll('video');
+            videos.forEach(v => { v.muted = true; v.playsInline = true; v.preload = 'metadata'; try { v.play(); } catch(e){} });
+
+            let paused = false;
+            let pos = 0;
+            const speed = parseFloat(stream.dataset.speed) || 30; // pixels per second
+            let lastTime = performance.now();
+
+            function step(now) {
+                if (paused) { lastTime = now; requestAnimationFrame(step); return; }
+                const dt = (now - lastTime) / 1000;
+                lastTime = now;
+                pos += speed * dt;
+
+                const half = track.scrollHeight / 2;
+                if (pos >= half) pos -= half;
+
+                track.style.transform = `translateY(-${pos}px)`;
+                requestAnimationFrame(step);
+            }
+
+            // hover / focus interactions
+            stream.addEventListener('mouseenter', () => {
+                paused = true;
+                stream.classList.add('paused');
+                track.querySelectorAll('video').forEach(v => v.pause());
+            });
+            stream.addEventListener('mouseleave', () => {
+                paused = false;
+                stream.classList.remove('paused');
+                track.querySelectorAll('video').forEach(v => { try { v.play(); } catch(e){} });
+            });
+
+            // touch support: pause while touching
+            stream.addEventListener('touchstart', () => { paused = true; }, {passive: true});
+            stream.addEventListener('touchend', () => { paused = false; }, {passive: true});
+
+            // click/open links handled by natural anchors
+
+            // start animation
+            requestAnimationFrame(step);
+        });
+    })();
 });
 
 const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
